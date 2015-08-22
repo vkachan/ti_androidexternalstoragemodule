@@ -9,6 +9,7 @@
 package dk.mikkendigital.mkdfs;
 
 import java.io.File;
+import java.util.Map;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -52,6 +53,13 @@ public class MkdfsModule extends KrollModule
 	// Methods
 	@Kroll.method
 	@Kroll.getProperty
+	public String getTestString() 
+	{
+		return "victor";
+	}
+
+	@Kroll.method
+	@Kroll.getProperty
 	public String getExternalStorageDirectory() 
 	{
 		File f = Environment.getExternalStorageDirectory();
@@ -69,6 +77,26 @@ public class MkdfsModule extends KrollModule
 			f.mkdirs();
 		return f.getAbsolutePath();
 	}	
+
+	@Kroll.method
+	@Kroll.getProperty
+	public String getPackageName() 
+	{
+		return m_app.getPackageName();
+	}
 	
+	@Kroll.method
+	@Kroll.getProperty
+	public String[] getExternalFilesDirs() 
+	{
+		File[] f = m_app.getExternalFilesDirs(null);
+		String[] dirs = new String[f.length];  
+		for (int i = 0; i < f.length; i ++) {
+			if (!f[i].exists())
+				f[i].mkdirs();
+			dirs[i] = f[i].getAbsolutePath();
+		}
+		return dirs;
+	}	
 }
 
